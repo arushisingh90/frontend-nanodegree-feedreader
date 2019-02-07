@@ -29,6 +29,7 @@ var allFeeds = [
  */
 function init() {
     // Load the first feed we've defined (index of 0).
+    this.loadComplete = false;
     loadFeed(0);
 }
 
@@ -43,6 +44,7 @@ function init() {
  function loadFeed(id, cb) {
      var feedUrl = allFeeds[id].url,
          feedName = allFeeds[id].name;
+         self = this;
 
      $.ajax({
        type: "POST",
@@ -50,7 +52,7 @@ function init() {
        data: JSON.stringify({url: feedUrl}),
        contentType:"application/json",
        success: function (result, status){
-
+                 self.loadComplete = true;
                  var container = $('.feed'),
                      title = $('.header-title'),
                      entries = result.feed.entries,
